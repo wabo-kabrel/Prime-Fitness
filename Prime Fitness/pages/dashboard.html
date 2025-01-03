@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    />
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <title>Prime Fitness - Dashboard</title>
+  </head>
+  <body>
+    <button class="menu-btn" id="menuBtn">
+      <i class="bx bx-menu"></i>
+    </button>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <a href="/index.html" class="logo">Prime <span>Fitness</span></a>
+        <ul class="nav-links">
+          <li>
+            <a href="#"><i class="bx bxs-dashboard"></i> Dashboard</a>
+          </li>
+          <li>
+            <a href="#"><i class="bx bx-dumbbell"></i> Workouts</a>
+          </li>
+          <li>
+            <a href="#"><i class="bx bx-calendar"></i> Schedule</a>
+          </li>
+          <li>
+            <a href="#"><i class="bx bx-user"></i> Profile</a>
+          </li>
+          <li>
+            <a href="#"><i class="bx bx-cog"></i> Settings</a>
+          </li>
+          <li>
+            <a href="#"><i class="bx bx-help-circle"></i> Support</a>
+          </li>
+          <li>
+            <li><a href="auth.html"><i class='bx bx-log-out'></i> Logout</a></li>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="header">
+          <h1 class="welcome-text">Welcome back, John!</h1>
+          <div class="profile-section">
+            <div class="profile-pic"></div>
+            <div class="user-info">
+              <span class="user-name">John Doe</span>
+              <span class="membership-type">Premium Member</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Workouts Completed</h3>
+            <div class="value">24</div>
+          </div>
+          <div class="stat-card">
+            <h3>Current Streak</h3>
+            <div class="value">7 days</div>
+          </div>
+          <div class="stat-card">
+            <h3>Next Session</h3>
+            <div class="value">Today, 5:00 PM</div>
+          </div>
+          <div class="stat-card">
+            <h3>Membership Status</h3>
+            <div class="value">Active</div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity">
+          <h2>Recent Activity</h2>
+          <div class="activity-item">
+            <p><strong>Chest Workout</strong> - Completed 45 minutes ago</p>
+          </div>
+          <div class="activity-item">
+            <p>
+              <strong>Personal Training Session</strong> - Booked for tomorrow
+            </p>
+          </div>
+          <div class="activity-item">
+            <p><strong>Weight Goal</strong> - Updated 2 days ago</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const menuBtn = document.getElementById("menuBtn");
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+      const statCards = document.querySelectorAll(".stat-card");
+
+      // Toggle sidebar
+      function toggleSidebar() {
+        sidebar.classList.toggle("active");
+        overlay.classList.toggle("active");
+        menuBtn.innerHTML = sidebar.classList.contains("active")
+          ? '<i class="bx bx-x"></i>'
+          : '<i class="bx bx-menu"></i>';
+      }
+
+      menuBtn.addEventListener("click", toggleSidebar);
+      overlay.addEventListener("click", toggleSidebar);
+
+      // Close sidebar when clicking a link (mobile)
+      const navLinks = document.querySelectorAll(".nav-links a");
+      navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          if (window.innerWidth <= 768) {
+            toggleSidebar();
+          }
+        });
+      });
+
+      // Animate stats on load
+      function animateStats() {
+        statCards.forEach((card, index) => {
+          setTimeout(() => {
+            card.style.opacity = "1";
+            card.style.transform = "translateY(0)";
+          }, index * 100);
+        });
+      }
+
+      // Handle resize events
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 768) {
+          sidebar.classList.remove("active");
+          overlay.classList.remove("active");
+          menuBtn.innerHTML = '<i class="bx bx-menu"></i>';
+        }
+      });
+
+      // Initialize
+      document.addEventListener("DOMContentLoaded", () => {
+        statCards.forEach((card) => {
+          card.style.opacity = "0";
+          card.style.transform = "translateY(20px)";
+        });
+        animateStats();
+      });
+    </script>
+    <script src="/js/authentication.js"></script>
+  </body>
+</html>
